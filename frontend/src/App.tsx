@@ -176,6 +176,22 @@ export default function App() {
 
       {/* Main View Area */}
       <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 overflow-hidden flex flex-col justify-stretch">
+        <div className="mb-5 rounded-2xl border border-cyber-border/40 bg-slate-950/65 px-4 py-3.5 shadow-[0_0_35px_rgba(59,130,246,0.08)]">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-cyber-accent font-semibold">
+                Live operations center
+              </div>
+              <div className="text-sm text-cyber-text font-medium">
+                Monitoring identities, endpoints, and suspicious behavior in near real time.
+              </div>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Signal feed healthy
+            </div>
+          </div>
+        </div>
         {renderActiveView()}
       </main>
 

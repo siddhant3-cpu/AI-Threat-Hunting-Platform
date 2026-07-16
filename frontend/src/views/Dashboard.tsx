@@ -79,9 +79,32 @@ export function Dashboard() {
         </button>
       </div>
 
+      <div className="rounded-2xl border border-cyber-border/50 bg-gradient-to-br from-blue-500/15 via-slate-900/70 to-slate-950 p-5 shadow-[0_0_30px_rgba(59,130,246,0.08)]">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.35em] text-cyber-accent font-semibold">
+              Threat posture
+            </div>
+            <h2 className="mt-1 text-xl font-semibold text-cyber-text">
+              Elevated visibility across the attack surface
+            </h2>
+            <p className="mt-1 text-sm text-cyber-muted">
+              Analysts can quickly review detections, correlate incidents, and respond to live attack simulations.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {['Credential theft', 'PowerShell abuse', 'Persistence'].map((tag) => (
+              <span key={tag} className="rounded-full border border-cyber-border/50 bg-slate-950/70 px-3 py-1 text-[11px] text-cyber-muted">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div className="glass-card glass-card-hover p-5 rounded-xl flex items-center justify-between">
+        <div className="glass-card glass-card-hover p-5 rounded-2xl flex items-center justify-between border border-slate-800/70 bg-gradient-to-br from-slate-900/90 to-slate-950/70">
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-cyber-muted">Total Security Alerts</div>
             <div className="text-3xl font-bold mt-1.5 text-cyber-text">{stats.total_alerts}</div>
@@ -91,7 +114,7 @@ export function Dashboard() {
           </div>
         </div>
 
-        <div className="glass-card glass-card-hover p-5 rounded-xl flex items-center justify-between">
+        <div className="glass-card glass-card-hover p-5 rounded-2xl flex items-center justify-between border border-slate-800/70 bg-gradient-to-br from-slate-900/90 to-slate-950/70">
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-cyber-muted">Active Incidents</div>
             <div className="text-3xl font-bold mt-1.5 text-orange-400">{stats.active_incidents}</div>
@@ -101,7 +124,7 @@ export function Dashboard() {
           </div>
         </div>
 
-        <div className="glass-card glass-card-hover p-5 rounded-xl flex items-center justify-between">
+        <div className="glass-card glass-card-hover p-5 rounded-2xl flex items-center justify-between border border-slate-800/70 bg-gradient-to-br from-slate-900/90 to-slate-950/70">
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-cyber-muted">Critical Events</div>
             <div className="text-3xl font-bold mt-1.5 text-red-500">{stats.critical_alerts}</div>
@@ -111,7 +134,7 @@ export function Dashboard() {
           </div>
         </div>
 
-        <div className="glass-card glass-card-hover p-5 rounded-xl flex items-center justify-between">
+        <div className="glass-card glass-card-hover p-5 rounded-2xl flex items-center justify-between border border-slate-800/70 bg-gradient-to-br from-slate-900/90 to-slate-950/70">
           <div>
             <div className="text-xs font-semibold uppercase tracking-wider text-cyber-muted">Avg Risk Score</div>
             <div className="text-3xl font-bold mt-1.5 text-cyber-text">{stats.avg_risk_score}</div>
