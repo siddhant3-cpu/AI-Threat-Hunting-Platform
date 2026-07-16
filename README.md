@@ -10,52 +10,52 @@ Below is the end-to-end data pipeline showing how simulated attack telemetry is 
 
 ```mermaid
 graph TD
-    subgraph Client Panel (React Frontend)
-        UI[ASATL Dashboard / Incident Manager / Sim Lab]
+
+    subgraph CLIENT["Client Panel (React Frontend)"]
+        UI["ASATL Dashboard / Incident Manager / Sim Lab"]
     end
 
-    subgraph Simulation Telemetry
-        MIMI[Mimikatz execution]
-        BRUTE[SSH Brute Force]
-        REV[Reverse Shell script]
+    subgraph SIM["Simulation Telemetry"]
+        MIMI["Mimikatz Execution"]
+        BRUTE["SSH Brute Force"]
+        REV["Reverse Shell Script"]
     end
 
-    subgraph SOC SIEM Backend (FastAPI)
-        API[FastAPI Router /api]
-        SE[Sigma Engine]
-        CE[Correlation Engine]
-        TI[Threat Intel enrichment]
-        AI[AI Analyst helper]
+    subgraph BACKEND["SOC SIEM Backend (FastAPI)"]
+        API["FastAPI Router (/api)"]
+        SE["Sigma Engine"]
+        CE["Correlation Engine"]
+        TI["Threat Intelligence Enrichment"]
+        AI["AI Analyst Helper"]
     end
 
-    subgraph Data Store (SQLite)
-        DB_RAW[(RawEvents Table)]
-        DB_ALERTS[(Alerts Table)]
-        DB_INC[(Incidents Table)]
+    subgraph DB["SQLite Database"]
+        DB_RAW[("RawEvents Table")]
+        DB_ALERTS[("Alerts Table")]
+        DB_INC[("Incidents Table")]
     end
 
-    %% Telemetry Ingestion Flow
-    MIMI & BRUTE & REV -->|Trigger Attack Payload| API
-    API -->|Ingest Raw Logs| DB_RAW
+    MIMI --> API
+    BRUTE --> API
+    REV --> API
 
-    %% Detection Engine Flow
-    DB_RAW -->|Stream Logs| SE
-    SE -->|Compile & Match Rules| DB_ALERTS
+    API --> DB_RAW
 
-    %% Correlation Flow
-    DB_ALERTS -->|Window-based Aggregation| CE
-    CE -->|Compound Risk Calculation| DB_INC
+    DB_RAW --> SE
+    SE --> DB_ALERTS
 
-    %% Enrichment Flow
-    DB_INC -->|Enrich IPs/Domains| TI
-    DB_INC -->|Prompt Generation| AI
+    DB_ALERTS --> CE
+    CE --> DB_INC
 
-    %% Frontend Sync
-    DB_RAW & DB_ALERTS & DB_INC -->|Serve REST APIs| API
-    API -->|Feed Dashboard Metrics| UI
+    DB_INC --> TI
+    DB_INC --> AI
+
+    DB_RAW --> API
+    DB_ALERTS --> API
+    DB_INC --> API
+
+    API --> UI
 ```
-
----
 
 ## ✨ Features
 
