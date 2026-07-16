@@ -1,0 +1,23 @@
+title: Scheduled Task Persistence
+id: scheduled_task_persistence
+status: active
+description: Detects suspicious scheduled task creation used for persistence.
+category: process_creation
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_cmd:
+    CommandLine|contains:
+      - 'schtasks.exe'
+      - '/create'
+      - '/sc onlogon'
+      - '/ru system'
+  selection_image:
+    Image|endswith:
+      - '\\schtasks.exe'
+  condition: selection_cmd or selection_image
+severity: High
+tags:
+  - attack.persistence
+  - attack.t1053.005

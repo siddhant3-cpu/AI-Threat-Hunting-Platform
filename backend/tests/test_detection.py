@@ -1,5 +1,7 @@
+import os
 import pytest
 import datetime
+from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.database import Base
@@ -68,6 +70,23 @@ def test_sigma_engine_encoded_powershell():
     }
     alerts = engine.run_rules(non_matching_event)
     assert len(alerts) == 0
+
+def test_sigma_engine_scheduled_task_persistence_rule():
+    rules_dir = Path(__file__).resolve().parent.parent / "app" / "detection" / "rules"
+    engine = SigmaEngine(str(rules_dir))
+
+    matching_event = {
+        "source": "Winlogbeat-Sysmon",
+        "host": "WS-PROD-01",
+        "user": "admin",
+        "Image": "C:\\Windows\\System32\\schtasks.exe",
+        "CommandLine": "schtasks.exe /create /tn \"Updater\" /tr \"C:\\Temp\\evil.exe\" /sc onlogon /ru SYSTEM",
+        "timestamp": datetime.datetime.utcnow()
+    }
+
+    alerts = engine.run_rules(matching_event)
+    assert any(alert["rule_id"] == "scheduled_task_persistence" for alert in alerts)
+
 
 def test_correlation_engine_alert_grouping(db_session):
     engine = CorrelationEngine(window_minutes=5)
