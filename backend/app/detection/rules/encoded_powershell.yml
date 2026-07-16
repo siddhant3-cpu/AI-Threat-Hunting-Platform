@@ -1,0 +1,23 @@
+title: Encoded PowerShell Command Execution
+id: powershell_encoded
+status: active
+description: Detects encoded PowerShell command lines indicating obfuscated scripting.
+category: process_creation
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    CommandLine|contains:
+      - ' -encodedcommand'
+      - ' -enc'
+      - ' -e '
+      - ' -encoded'
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+  condition: selection
+severity: High
+tags:
+  - attack.execution
+  - attack.t1059.001

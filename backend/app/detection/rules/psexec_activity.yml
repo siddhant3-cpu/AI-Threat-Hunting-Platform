@@ -1,0 +1,22 @@
+title: PsExec Remote Execution Activity
+id: psexec_activity
+status: active
+description: Detects PsExec execution patterns including service creation and default pipe creations.
+category: process_creation
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_image:
+    Image|endswith:
+      - '\psexec.exe'
+      - '\psexec64.exe'
+  selection_service:
+    ServiceName|contains:
+      - 'PSEXESVC'
+  condition: selection_image or selection_service
+severity: High
+tags:
+  - attack.execution
+  - attack.t1569.002
+  - attack.lateral_movement

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: asatl-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # Map the SQLite database to preserve rules, incidents, and threat logs on the host
+      - ./backend/threat_hunting.db:/app/threat_hunting.db
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: asatl-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always

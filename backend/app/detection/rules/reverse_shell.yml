@@ -1,0 +1,24 @@
+title: Reverse Shell Activity Detected
+id: reverse_shell
+status: active
+description: Detects command lines indicating reverse shell connectivity.
+category: process_creation
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection_bash:
+    CommandLine|contains:
+      - 'bash -i >& /dev/tcp/'
+      - '/dev/udp/'
+      - 'nc -e /bin/sh'
+      - 'nc -e /bin/bash'
+      - 'python -c "import socket'
+      - 'python3 -c "import socket'
+  condition: selection_bash
+severity: High
+tags:
+  - attack.execution
+  - attack.t1059.004
+  - attack.command_and_control
+  - attack.t1090

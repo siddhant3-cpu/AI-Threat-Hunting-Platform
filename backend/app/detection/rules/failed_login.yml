@@ -1,0 +1,19 @@
+title: Failed Login Attempt
+id: failed_login
+status: active
+description: Detects failed login attempts on Windows and Linux endpoints.
+category: authentication
+logsource:
+  product: multi
+detection:
+  selection_windows:
+    EventID: 4625
+  selection_linux:
+    message|contains:
+      - 'Failed password for'
+      - 'Authentication failure'
+  condition: selection_windows or selection_linux
+severity: Low
+tags:
+  - attack.credential_access
+  - attack.t1110

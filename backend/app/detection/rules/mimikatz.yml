@@ -1,0 +1,24 @@
+title: Mimikatz LSASS Credential Dumping
+id: mimikatz_detection
+status: active
+description: Detects Mimikatz credential dumping commands and keywords in process activity.
+category: process_creation
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_cmd:
+    CommandLine|contains:
+      - 'sekurlsa::'
+      - 'logonpasswords'
+      - 'lsadump::'
+      - 'crypto::'
+      - 'mimikatz'
+  selection_image:
+    Image|endswith:
+      - '\mimikatz.exe'
+  condition: selection_cmd or selection_image
+severity: Critical
+tags:
+  - attack.credential_access
+  - attack.t1003.001

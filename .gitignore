@@ -1,0 +1,25 @@
+# Dependency directories
+node_modules/
+venv/
+.venv/
+env/
+.env/
+__pycache__/
+*.pyc
+
+# Local databases & SQLite files
+*.db
+*.db-journal
+*.sqlite3
+
+# Development/Build Outputs
+dist/
+build/
+.pytest_cache/
+.oxlintrc.json
+
+# IDE / System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

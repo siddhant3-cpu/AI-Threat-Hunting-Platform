@@ -1,0 +1,23 @@
+title: Suspicious Registry Persistence via Run Keys
+id: registry_persistence
+status: active
+description: Detects modification of registry Run or RunOnce keys which malware commonly abuses for persistence.
+category: registry_modification
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    RegistryKey|contains:
+      - 'Microsoft\Windows\CurrentVersion\Run'
+      - 'Microsoft\Windows\CurrentVersion\RunOnce'
+    Details|contains:
+      - '.exe'
+      - 'cmd.exe'
+      - 'powershell.exe'
+      - 'wscript.exe'
+  condition: selection
+severity: Medium
+tags:
+  - attack.persistence
+  - attack.t1547.001
